@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Lens — Stop Building Features Nobody Asked For</title>
+    <meta name="description" content="Claude Code plugin that audits your product through Kotler's marketing lenses. The product-thinking toolkit every builder needs.">
+    <meta property="og:title" content="Market Lens — Product Thinking for Builders">
+    <meta property="og:description" content="Claude Code plugin that challenges you to think beyond features. 4 marketing lenses. 15 minutes. One audit that changes how you build.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://shavidze.github.io/market-lens">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Market Lens — Stop Building Features Nobody Asked For">
+    <meta name="twitter:description" content="Claude Code plugin that audits your product through Kotler's marketing lenses.">
+    <style>
+        :root {
+            --bg: #0a0a0b;
+            --surface: #141416;
+            --border: #23232a;
+            --text: #e4e4e7;
+            --text-muted: #71717a;
+            --accent: #f97316;
+            --accent-dim: #c2410c;
+            --green: #22c55e;
+            --yellow: #eab308;
+            --red: #ef4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Hero */
+        .hero {
+            padding: 80px 0 60px;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border: 1px solid var(--accent-dim);
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--accent);
+            margin-bottom: 24px;
+            letter-spacing: 0.5px;
+        }
+
+        h1 {
+            font-size: 42px;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        h1 span {
+            color: var(--accent);
+        }
+
+        .hero-sub {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 540px;
+            margin: 0 auto 40px;
+            line-height: 1.5;
+        }
+
+        .install-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px 24px;
+            display: inline-block;
+            font-size: 14px;
+            color: var(--accent);
+            cursor: pointer;
+            transition: border-color 0.2s;
+            position: relative;
+        }
+
+        .install-box:hover {
+            border-color: var(--accent-dim);
+        }
+
+        .install-box .copy-hint {
+            position: absolute;
+            top: -28px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            color: var(--text-muted);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .install-box:hover .copy-hint {
+            opacity: 1;
+        }
+
+        .install-box.copied {
+            border-color: var(--green);
+            color: var(--green);
+        }
+
+        /* The Problem */
+        .section {
+            padding: 60px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 24px;
+            font-weight: 600;
+        }
+
+        .problem-text {
+            font-size: 16px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .problem-text strong {
+            color: var(--text);
+        }
+
+        /* Lenses */
+        .lenses {
+            display: grid;
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .lens {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px 24px;
+        }
+
+        .lens-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .lens-icon {
+            font-size: 20px;
+            width: 32px;
+            text-align: center;
+        }
+
+        .lens-name {
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .lens-question {
+            color: var(--text-muted);
+            font-size: 13px;
+            font-style: italic;
+            margin-left: 44px;
+        }
+
+        /* Demo */
+        .demo-block {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 24px;
+            margin-top: 24px;
+            overflow-x: auto;
+        }
+
+        .demo-line {
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .demo-prompt {
+            color: var(--accent);
+        }
+
+        .demo-finding {
+            color: var(--text-muted);
+            padding-left: 16px;
+            border-left: 2px solid var(--border);
+            margin: 12px 0;
+        }
+
+        .demo-verdict {
+            margin-top: 16px;
+            padding: 12px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+
+        .verdict-yellow {
+            background: rgba(234, 179, 8, 0.08);
+            border: 1px solid rgba(234, 179, 8, 0.2);
+            color: var(--yellow);
+        }
+
+        .verdict-red {
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: var(--red);
+        }
+
+        /* Who */
+        .who-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .who-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            font-size: 13px;
+        }
+
+        .who-card strong {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .who-card p {
+            color: var(--text-muted);
+        }
+
+        /* How it works */
+        .steps {
+            margin-top: 24px;
+            counter-reset: step;
+        }
+
+        .step {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+            align-items: flex-start;
+        }
+
+        .step-num {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .step-content h3 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .step-content p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* CTA */
+        .cta {
+            text-align: center;
+            padding: 80px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .cta h2 {
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .cta p {
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            font-size: 15px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-dim);
+        }
+
+        .btn-secondary {
+            background: var(--surface);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-muted);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 28px; }
+            .hero { padding: 48px 0 40px; }
+            .who-grid { grid-template-columns: 1fr; }
+            .install-box { font-size: 12px; padding: 12px 16px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <section class="hero">
+        <div class="hero-badge">Claude Code Plugin</div>
+        <h1>Stop building features<br><span>nobody asked for.</span></h1>
+        <p class="hero-sub">Market Lens audits your product through Kotler's marketing lenses. 4 challenges. 15 minutes. One audit that changes how you build.</p>
+        <div class="install-box" onclick="copyInstall(this)">
+            <span class="copy-hint">click to copy</span>
+            /plugin marketplace add shavidze/market-lens
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>The problem</h2>
+        <p class="problem-text">You can write code. AI can write code. <strong>Everyone can write code now.</strong></p>
+        <p class="problem-text">The bottleneck isn't building — it's knowing <strong>what to build and for whom.</strong></p>
+        <p class="problem-text">Your README describes your tech stack. Your customer doesn't care about your tech stack. They care about their problem.</p>
+        <p class="problem-text">Market Lens makes you see your product the way your <strong>customer</strong> sees it — not the way your <strong>IDE</strong> sees it.</p>
+    </section>
+
+    <section class="section">
+        <h2>4 lenses, 4 hard questions</h2>
+        <div class="lenses">
+            <div class="lens">
+                <div class="lens-header">
+                    <div class="lens-icon">🔍</div>
+                    <div class="lens-name">Myopia Check</div>
+                </div>
+                <div class="lens-question">"Are you selling the drill — or solving the hole?"</div>
+            </div>
+            <div class="lens">
+                <div class="lens-header">
+                    <div class="lens-icon">⚖️</div>
+                    <div class="lens-name">Value Perception</div>
+                </div>
+                <div class="lens-question">"What does the customer get vs what they pay — and not just money?"</div>
+            </div>
+            <div class="lens">
+                <div class="lens-header">
+                    <div class="lens-icon">🎯</div>
+                    <div class="lens-name">Satisfaction Risk</div>
+                </div>
+                <div class="lens-question">"Where will expectations break — even if the code works perfectly?"</div>
+            </div>
+            <div class="lens">
+                <div class="lens-header">
+                    <div class="lens-icon">🔄</div>
+                    <div class="lens-name">Retention Signal</div>
+                </div>
+                <div class="lens-question">"After the first use, why would they come back tomorrow?"</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>What it actually looks like</h2>
+        <div class="demo-block">
+            <div class="demo-line"><span class="demo-prompt">❯ /market-lens:audit</span></div>
+            <div class="demo-line" style="color: var(--text-muted); margin-top: 8px;">Scanning codebase... found README, landing page, pricing, onboarding flow.</div>
+            <div class="demo-finding">
+                Your README opens with "A Next.js application with real-time WebSocket support and PostgreSQL backend."<br><br>
+                Your customer doesn't care about your stack.<br>
+                They care about what problem you solve.
+            </div>
+            <div class="demo-line" style="margin-top: 16px;"><strong>Challenge:</strong> Describe your product without mentioning a single feature.</div>
+            <div class="demo-verdict verdict-yellow">
+                🟡 Myopia Check: You know your customer but you're leading with brand vibe instead of their pain.
+            </div>
+            <div class="demo-verdict verdict-red" style="margin-top: 8px;">
+                🔴 Retention Signal: Zero mechanisms to bring users back. This is your biggest gap.
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>How it works</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                    <h3>Silent scan</h3>
+                    <p>Reads your README, landing pages, pricing, onboarding, error pages — extracts what your product promises.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                    <h3>3 context questions</h3>
+                    <p>Your target user, the problem you solve, the alternatives. With recommended answers based on what it found.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                    <h3>4 challenges</h3>
+                    <p>Lens by lens, it presents findings, challenges you, pushes back on vague answers. Like a sparring partner, not a reviewer.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-content">
+                    <h3>PRODUCT-AUDIT.md</h3>
+                    <p>Findings, risk levels, and top 3 action items — saved to your project. Run again after you've acted on them.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Who is this for</h2>
+        <div class="who-grid">
+            <div class="who-card">
+                <strong>Solo founders</strong>
+                <p>Building the product AND doing the marketing. Need a second brain for the marketing part.</p>
+            </div>
+            <div class="who-card">
+                <strong>Indie hackers</strong>
+                <p>Ship fast, validate faster. Stop building features before validating the problem.</p>
+            </div>
+            <div class="who-card">
+                <strong>Engineers</strong>
+                <p>Great at code, learning product. The next generation of builders needs more than just coding skills.</p>
+            </div>
+            <div class="who-card">
+                <strong>Vibe coders</strong>
+                <p>AI writes the code. You need to know what to build and why anyone would care.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="border-top: none;">
+        <h2>Two modes</h2>
+        <div class="lenses">
+            <div class="lens">
+                <div class="lens-header">
+                    <div class="lens-icon">⚡</div>
+                    <div class="lens-name">/market-lens:quick</div>
+                </div>
+                <div class="lens-question">3-minute myopia gut-check. One question, one finding, one action.</div>
+            </div>
+            <div class="lens">
+                <div class="lens-header">
+                    <div class="lens-icon">🔬</div>
+                    <div class="lens-name">/market-lens:audit</div>
+                </div>
+                <div class="lens-question">Full 15-minute interactive audit. 4 lenses, challenges, pushback, final report.</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <h2>Your code works. <span style="color: var(--accent);">Does your product?</span></h2>
+        <p>Install in 10 seconds. First audit in 15 minutes.</p>
+        <div class="cta-buttons">
+            <a href="https://github.com/shavidze/market-lens" class="btn btn-primary">GitHub →</a>
+            <a href="#" class="btn btn-secondary" onclick="copyInstall(document.querySelector('.install-box')); return false;">Copy install command</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>Built by <a href="https://github.com/shavidze">shavidze</a> · Frameworks from Kotler's Principles of Marketing · <a href="https://github.com/shavidze/market-lens">Source</a></p>
+    </footer>
+</div>
+
+<script>
+function copyInstall(el) {
+    const text = '/plugin marketplace add shavidze/market-lens';
+    navigator.clipboard.writeText(text).then(() => {
+        el.classList.add('copied');
+        const original = el.innerHTML;
+        el.innerHTML = '<span class="copy-hint" style="opacity:1">copied!</span>✓ Copied to clipboard';
+        setTimeout(() => {
+            el.innerHTML = original;
+            el.classList.remove('copied');
+        }, 2000);
+    });
+}
+</script>
+
+</body>
+</html>

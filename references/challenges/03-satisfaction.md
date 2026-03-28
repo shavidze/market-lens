@@ -24,6 +24,8 @@ Example finding:
 Ask the user:
 > "Name one thing your product promises (explicitly or implicitly) that it doesn't fully deliver on yet."
 
+**Always provide your recommended answer** — based on the promise-delivery gaps you found in the scan. Example: "I found that your landing page says 'Get started in seconds' but the actual flow takes 5 steps. Is that the biggest gap, or is there something worse?" The user can accept, reject, or modify.
+
 Everyone has one. If they say "nothing," push back — they haven't looked hard enough.
 
 Then apply the Motorola Test:

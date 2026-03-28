@@ -35,6 +35,8 @@ Ask the user to fill this out:
 > - Social benefit (status, belonging): ___
 > - Convenience: ___
 
+**Always provide your recommended answer** — pre-fill this matrix based on what you found in the codebase (pricing, onboarding, signup flow, marketing copy). The user can accept, reject, or modify. This gives them something concrete to react to instead of a blank form.
+
 ### Step 3: Evaluate the Response
 Listen for:
 - **Red flags:** "Gets" column is all features ("they get real-time sync, dark mode, API access"). Features are not benefits.

@@ -21,6 +21,12 @@ Example finding:
 Ask the user directly:
 > "Without using any technical terms, features, or product names — what problem does your product solve, and for whom?"
 
+**Always provide your recommended answer** based on what you found in the codebase scan. The user can accept, reject, or modify it. Example:
+
+> "Based on what I found in your codebase, here's my best guess: '[specific problem] for [specific person].' Does that match your intent, or am I off?"
+
+This saves the user from a blank-page problem and gives them something concrete to react to.
+
 ### Step 3: Evaluate the Response
 Listen for:
 - **Red flags:** Response still contains features ("it lets users create dashboards..."). Features are HOW, not WHY.

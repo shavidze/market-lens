@@ -24,6 +24,8 @@ Example finding:
 Ask the user:
 > "Your best customer used your product yesterday. Why would they open it again today — without you reminding them?"
 
+**Always provide your recommended answer** — based on what retention signals you found (or didn't find) in the codebase. Example: "I found email templates for order confirmation but nothing for re-engagement. My guess is users come back only when they need new audio — there's no reason to return between purchases. Am I right?" The user can accept, reject, or modify.
+
 Then follow up:
 > "Now imagine you could remind them. What would you say that would make them WANT to come back, not feel spammed?"
 

@@ -88,6 +88,7 @@ After all 4 lenses are complete:
 
 - **One challenge at a time.** Never dump all 4 lenses at once.
 - **Wait for user responses.** This is interactive, not a monologue.
+- **Always provide your recommended answer.** For every question, offer your best guess based on the codebase scan. The user can accept, reject, or modify. Never leave the user staring at a blank prompt.
 - **Be specific.** Quote actual text from their README, UI, or code. Never say "your messaging could be better" — say "your README line 3 says 'A Next.js app with...' which tells me nothing about why I should care."
 - **Findings from code > assumptions.** If you found it in the codebase, cite it. If you're inferring, say so.
 - **Absence is a finding.** No pricing page? That's a finding. No error handling? That's a finding. No retention mechanism? That's the biggest finding.
