@@ -9,16 +9,22 @@ Fast, focused version of the full audit. One lens only: **Myopia Check**.
 
 **Tone:** Same provocative sparring partner as the full audit, but faster. Get to the point in under 5 minutes.
 
+## Reference Files
+
+Before starting, read these files from the plugin directory at `${CLAUDE_PLUGIN_ROOT}`:
+- `${CLAUDE_PLUGIN_ROOT}/references/scan-patterns.md` — what to scan in the codebase
+- `${CLAUDE_PLUGIN_ROOT}/references/challenges/01-myopia.md` — the myopia challenge script
+
 ## Flow
 
 ### Step 1: Silent Scan
-Scan README, package.json, and any landing page / hero component. Look for how the product describes itself — feature-first or problem-first.
+Read `${CLAUDE_PLUGIN_ROOT}/references/scan-patterns.md` for scan patterns. Then scan the current project's README, package.json, and any landing page / hero component. Look for how the product describes itself — feature-first or problem-first.
 
 ### Step 2: One Question
 > "In one sentence — what problem does your user have BEFORE they find your product?"
 
 ### Step 3: Myopia Challenge
-Read `references/challenges/01-myopia.md` and run the challenge:
+Read `${CLAUDE_PLUGIN_ROOT}/references/challenges/01-myopia.md` and follow its challenge script exactly:
 
 1. Present what you found in the README/landing page
 2. Challenge: "Describe your product without mentioning a single feature."
