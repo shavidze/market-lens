@@ -45,4 +45,5 @@ End with a single actionable takeaway:
 - Total interaction should be under 5 minutes
 - Maximum 2 back-and-forth exchanges with the user
 - One finding, one recommendation, one action item
+- Always provide your recommended answer for each question — the user can accept, reject, or modify
 - Always suggest the full audit at the end
