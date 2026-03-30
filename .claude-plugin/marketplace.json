@@ -1,26 +1,23 @@
 {
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "market-lens-marketplace",
+  "description": "Product-thinking toolkit for builders — audit your product through Kotler's marketing lenses",
   "owner": {
     "name": "shavidze",
     "email": "shavidze@github.com"
   },
-  "metadata": {
-    "description": "Product-thinking toolkit for builders — audit your product through Kotler's marketing lenses",
-    "version": "1.0.0"
-  },
   "plugins": [
     {
       "name": "market-lens",
-      "source": ".",
       "description": "Product audit through 4 marketing lenses: Myopia, Value, Satisfaction, Retention. Challenges you to think beyond features.",
-      "version": "1.0.0",
+      "source": {
+        "source": "github",
+        "repo": "shavidze/market-lens"
+      },
       "author": {
         "name": "shavidze"
       },
-      "license": "MIT",
-      "keywords": ["marketing", "product-thinking", "audit", "kotler", "builder-tools"],
-      "category": "productivity",
-      "tags": ["product", "marketing", "audit", "startup", "indie-hacker"]
+      "category": "productivity"
     }
   ]
 }
