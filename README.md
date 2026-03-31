@@ -25,7 +25,7 @@ Market Lens challenges you to think about your product from the **customer's per
 ## Install
 
 ```bash
-claude plugin install market-lens
+claude plugin install github:shavidze/market-lens
 ```
 
 Or load locally for development:
